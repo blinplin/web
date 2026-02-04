@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤪 SKIBIDI TOILET CHAOS 🚽</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06b6d4, #10b981, #fbbf24, #ff006e);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="28" font-size="28">🍕</text></svg>'), auto;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .title {
+            font-size: clamp(2rem, 10vw, 6rem);
+            text-align: center;
+            color: white;
+            text-shadow: 5px 5px 0px #ff006e, 
+                        10px 10px 0px #8338ec,
+                        15px 15px 0px #3a86ff;
+            animation: bounce 0.5s infinite alternate, spin 4s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-20px); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .chaos-button {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #ff006e, #fbbf24);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: pulse 1s infinite;
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.5);
+        }
+
+        .chaos-button:hover {
+            transform: scale(1.2) rotate(10deg);
+            background: linear-gradient(45deg, #10b981, #06b6d4);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.7); }
+            70% { box-shadow: 0 0 0 30px rgba(255, 0, 110, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 0, 110, 0); }
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 6s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-100px) rotate(120deg); }
+            66% { transform: translateY(-50px) rotate(240deg); }
+        }
+
+        .chaos-zone {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .rainbow-text {
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 2s linear infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .dancing-duck {
+            position: fixed;
+            font-size: 3rem;
+            animation: dance 2s infinite;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .skibidi-toilet {
+            position: fixed;
+            font-size: 4rem;
+            animation: skibidiDance 1.5s infinite;
+            z-index: 998;
+            pointer-events: none;
+            filter: drop-shadow(0 0 20px #ff00ff);
+        }
+
+        @keyframes skibidiDance {
+            0%, 100% { transform: translateY(0px) rotate(-15deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(15deg) scale(1.2); }
+            50% { transform: translateY(-15px) rotate(-5deg) scale(0.9); }
+            75% { transform: translateY(-40px) rotate(25deg) scale(1.1); }
+        }
+
+        .toilet-flush {
+            position: fixed;
+            font-size: 3rem;
+            animation: flush 2s forwards;
+            z-index: 1001;
+            pointer-events: none;
+        }
+
+        @keyframes flush {
+            0% { transform: scale(0.5) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
+            100% { transform: scale(2) rotate(360deg) translateY(-200px); opacity: 0; }
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(-10deg) scale(1); }
+            25% { transform: rotate(10deg) scale(1.1); }
+            50% { transform: rotate(-5deg) scale(0.9); }
+            75% { transform: rotate(15deg) scale(1.05); }
+        }
+
+        .shake-mode {
+            animation: shake 0.1s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .spinning-mode {
+            animation: crazySpin 0.5s infinite linear;
+        }
+
+        @keyframes crazySpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.5); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title rainbow-text">🚽 SKIBIDI TOILET CHAOS 🚽</h1>
+        <button class="chaos-button" onclick="unleashChaos()">UNLEASH CHAOS</button>
+        <div id="chaosZone" class="chaos-zone"></div>
+    </div>
+
+    <script>
+        let chaosLevel = 0;
+        let isChaosActive = false;
+        
+        // Create floating emojis on load
+        function createFloatingEmojis() {
+            const emojis = ['🦄', '🌈', '🍕', '🎉', '🚀', '🐸', '🦩', '🌮', '🎸', '🍔', '🦚', '🍩', '🚽', '🧻', '💦'];
+            
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'floating-emoji';
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.top = Math.random() * 100 + '%';
+                    emoji.style.animationDelay = Math.random() * 6 + 's';
+                    emoji.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                    document.body.appendChild(emoji);
+                }, i * 200);
+            }
+        }
+
+        function unleashChaos() {
+            chaosLevel++;
+            isChaosActive = true;
+            
+            const button = document.querySelector('.chaos-button');
+            
+            switch(chaosLevel) {
+                case 1:
+                    button.textContent = '🚽 SKIBIDI MORE! 🚽';
+                    createDucks();
+                    createSkibidiToilets();
+                    break;
+                case 2:
+                    button.textContent = '🧻 SKIBIDI MADNESS!! 🧻';
+                    document.body.classList.add('shake-mode');
+                    toiletFlush();
+                    break;
+                case 3:
+                    button.textContent = '💦 SKIBIDI MAXIMUM!!! 💦';
+                    document.body.classList.add('spinning-mode');
+                    explodeEmojis();
+                    massiveSkibidiAttack();
+                    break;
+                case 4:
+                    button.textContent = '🎯 ABSOLUTE MADNESS 🎯';
+                    changeCursorRandomly();
+                    createFireworks();
+                    break;
+                case 5:
+                    button.textContent = '🌈 REALITY BREAKING 🌈';
+                    realityGlitch();
+                    break;
+                default:
+                    button.textContent = '🚽 SKIBIDI UNSTOPPABLE 🚽';
+                   skibidi终极Chaos();
+            }
+            
+            // Random effects
+            if (Math.random() > 0.5) {
+                changeColors();
+            }
+            
+            if (Math.random() > 0.7) {
+                playRandomSound();
+            }
+        }
+
+        function createDucks() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const duck = document.createElement('div');
+                    duck.className = 'dancing-duck';
+                    duck.textContent = '🦆';
+                    duck.style.left = Math.random() * 100 + '%';
+                    duck.style.top = Math.random() * 100 + '%';
+                    document.body.appendChild(duck);
+                    
+                    setTimeout(() => duck.remove(), 5000);
+                }, i * 300);
+            }
+        }
+
+        function explodeEmojis() {
+            const emojis = ['💥', '🔥', '✨', '🌟', '💫', '⭐', '🎆', '🎇'];
+            const chaosZone = document.getElementById('chaosZone');
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.position = 'absolute';
+                    emoji.style.fontSize = (Math.random() * 3 + 1) + 'rem';
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.top = Math.random() * 100 + '%';
+                    emoji.style.animation = 'spin 1s linear infinite';
+                    chaosZone.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 3000);
+                }, i * 100);
+            }
+        }
+
+        function changeColors() {
+            const colors = ['#ff006e', '#8338ec', '#3a86ff', '#06b6d4', '#10b981', '#fbbf24', '#f43f5e'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.background = `linear-gradient(45deg, ${randomColor}, #ffffff, ${randomColor})`;
+        }
+
+        function changeCursorRandomly() {
+            const cursors = ['🍕', '🦄', '🌮', '🍩', '🎉', '🚀', '🐸', '🦩'];
+            const randomCursor = cursors[Math.floor(Math.random() * cursors.length)];
+            document.body.style.cursor = `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="28" font-size="28">${randomCursor}</text></svg>'), auto`;
+        }
+
+        function createFireworks() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    
+                    for (let j = 0; j < 20; j++) {
+                        const particle = document.createElement('div');
+                        particle.style.position = 'fixed';
+                        particle.style.width = '10px';
+                        particle.style.height = '10px';
+                        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.borderRadius = '50%';
+                        particle.style.left = x + 'px';
+                        particle.style.top = y + 'px';
+                        particle.style.zIndex = '10000';
+                        particle.style.pointerEvents = 'none';
+                        
+                        document.body.appendChild(particle);
+                        
+                        const angle = (Math.PI * 2 * j) / 20;
+                        const velocity = Math.random() * 200 + 100;
+                        const lifetime = Math.random() * 1000 + 1000;
+                        
+                        let opacity = 1;
+                        let currentX = x;
+                        let currentY = y;
+                        let currentVx = Math.cos(angle) * velocity;
+                        let currentVy = Math.sin(angle) * velocity;
+                        
+                        const animate = () => {
+                            currentX += currentVx * 0.016;
+                            currentY += currentVy * 0.016;
+                            currentVy += 200 * 0.016; // gravity
+                            opacity -= 0.016 / lifetime * 1000;
+                            
+                            particle.style.left = currentX + 'px';
+                            particle.style.top = currentY + 'px';
+                            particle.style.opacity = opacity;
+                            
+                            if (opacity > 0) {
+                                requestAnimationFrame(animate);
+                            } else {
+                                particle.remove();
+                            }
+                        };
+                        
+                        requestAnimationFrame(animate);
+                    }
+                }, i * 500);
+            }
+        }
+
+        function realityGlitch() {
+            const originalTransform = document.body.style.transform;
+            const originalFilter = document.body.style.filter;
+            
+            document.body.style.filter = 'hue-rotate(180deg) saturate(200%) contrast(150%)';
+            document.body.style.transform = 'scale(1.1) skew(5deg, -3deg)';
+            
+            setTimeout(() => {
+                document.body.style.filter = originalFilter;
+                document.body.style.transform = originalTransform;
+            }, 2000);
+            
+            // Create glitch text
+            const glitchTexts = ['SYSTEM ERROR', 'REALITY GLITCH', 'BUFFER OVERFLOW', '404 CHAOS NOT FOUND'];
+            const glitchText = document.createElement('div');
+            glitchText.textContent = glitchTexts[Math.floor(Math.random() * glitchTexts.length)];
+            glitchText.style.position = 'fixed';
+            glitchText.style.top = '50%';
+            glitchText.style.left = '50%';
+            glitchText.style.transform = 'translate(-50%, -50%)';
+            glitchText.style.fontSize = '5rem';
+            glitchText.style.color = '#ff0000';
+            glitchText.style.fontFamily = 'monospace';
+            glitchText.style.zIndex = '10001';
+            glitchText.style.animation = 'blink 0.1s infinite';
+            
+            const style = document.createElement('style');
+            style.textContent = '@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }';
+            document.head.appendChild(style);
+            
+            document.body.appendChild(glitchText);
+            setTimeout(() => {
+                glitchText.remove();
+                style.remove();
+            }, 1000);
+        }
+
+        function createSkibidiToilets() {
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const toilet = document.createElement('div');
+                    toilet.className = 'skibidi-toilet';
+                    toilet.textContent = '🚽';
+                    toilet.style.left = Math.random() * 100 + '%';
+                    toilet.style.top = Math.random() * 100 + '%';
+                    toilet.style.animationDelay = Math.random() * 1.5 + 's';
+                    document.body.appendChild(toilet);
+                    
+                    setTimeout(() => toilet.remove(), 6000);
+                }, i * 200);
+            }
+        }
+
+        function toiletFlush() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const flush = document.createElement('div');
+                    flush.className = 'toilet-flush';
+                    flush.textContent = ['💦', '🌊', '💧', '🚽'][Math.floor(Math.random() * 4)];
+                    flush.style.left = Math.random() * 100 + '%';
+                    flush.style.top = Math.random() * 100 + '%';
+                    document.body.appendChild(flush);
+                    
+                    setTimeout(() => flush.remove(), 2000);
+                }, i * 150);
+            }
+        }
+
+        function massiveSkibidiAttack() {
+            const skibidiElements = ['🚽', '🧻', '💦', '🪠', '🚿', '🧼'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const element = document.createElement('div');
+                    element.textContent = skibidiElements[Math.floor(Math.random() * skibidiElements.length)];
+                    element.style.position = 'fixed';
+                    element.style.fontSize = (Math.random() * 2 + 2) + 'rem';
+                    element.style.left = Math.random() * 100 + '%';
+                    element.style.top = Math.random() * 100 + '%';
+                    element.style.zIndex = '10000';
+                    element.style.pointerEvents = 'none';
+                    element.style.animation = 'skibidiDance 2s infinite';
+                    document.body.appendChild(element);
+                    
+                    setTimeout(() => element.remove(), 4000);
+                }, i * 100);
+            }
+        }
+
+        function skibidi终极Chaos() {
+            // Create massive toilet paper rain
+            for (let i = 0; i < 150; i++) {
+                setTimeout(() => {
+                    const toiletPaper = document.createElement('div');
+                    const skibidiEmojis = ['🚽', '🧻', '💦', '🪠', '🚿', '🧼', '🧽', '🧴'];
+                    toiletPaper.textContent = skibidiEmojis[Math.floor(Math.random() * skibidiEmojis.length)];
+                    toiletPaper.style.position = 'fixed';
+                    toiletPaper.style.fontSize = (Math.random() * 3 + 1) + 'rem';
+                    toiletPaper.style.left = Math.random() * 100 + '%';
+                    toiletPaper.style.top = '-100px';
+                    toiletPaper.style.zIndex = '9999';
+                    toiletPaper.style.pointerEvents = 'none';
+                    toiletPaper.style.animation = 'toiletPaperFall 4s linear infinite';
+                    
+                    const style = document.createElement('style');
+                    style.textContent = `@keyframes toiletPaperFall { to { transform: translateY(${window.innerHeight + 200}px) rotate(720deg) scale(1.5); } }`;
+                    document.head.appendChild(style);
+                    
+                    document.body.appendChild(toiletPaper);
+                    
+                    setTimeout(() => {
+                        toiletPaper.remove();
+                        style.remove();
+                    }, 4000);
+                }, i * 30);
+            }
+            
+            // Create giant skibidi toilet
+            const giantToilet = document.createElement('div');
+            giantToilet.textContent = '🚽';
+            giantToilet.style.position = 'fixed';
+            giantToilet.style.fontSize = '20rem';
+            giantToilet.style.left = '50%';
+            giantToilet.style.top = '50%';
+            giantToilet.style.transform = 'translate(-50%, -50%)';
+            giantToilet.style.zIndex = '10002';
+            giantToilet.style.pointerEvents = 'none';
+            giantToilet.style.animation = 'giantSkibidi 3s infinite';
+            giantToilet.style.filter = 'drop-shadow(0 0 50px #ff00ff) drop-shadow(0 0 100px #00ffff)';
+            
+            const giantStyle = document.createElement('style');
+            giantStyle.textContent = '@keyframes giantSkibidi { 0%, 100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); } 25% { transform: translate(-50%, -50%) scale(1.3) rotate(90deg); } 50% { transform: translate(-50%, -50%) scale(0.8) rotate(180deg); } 75% { transform: translate(-50%, -50%) scale(1.1) rotate(270deg); } }';
+            document.head.appendChild(giantStyle);
+            
+            document.body.appendChild(giantToilet);
+            
+            // Screen flash with toilet colors
+            document.body.style.background = 'linear-gradient(45deg, #00ffff, #ff00ff, #00ffff)';
+            setTimeout(() => {
+                document.body.style.background = 'linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06b6d4, #10b981, #fbbf24, #ff006e)';
+                giantToilet.remove();
+                giantStyle.remove();
+            }, 3000);
+        }
+
+        function playRandomSound() {
+            // Create audio context for funny sounds (using Web Audio API)
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = Math.random() * 800 + 200;
+            oscillator.type = ['sine', 'square', 'sawtooth', 'triangle'][Math.floor(Math.random() * 4)];
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        // Mouse trail effect
+        document.addEventListener('mousemove', (e) => {
+            if (isChaosActive && Math.random() > 0.9) {
+                const trail = document.createElement('div');
+                trail.textContent = ['✨', '🌟', '💫', '⭐', '🌈', '🚽', '🧻', '💦'][Math.floor(Math.random() * 8)];
+                trail.style.position = 'fixed';
+                trail.style.left = e.clientX + 'px';
+                trail.style.top = e.clientY + 'px';
+                trail.style.pointerEvents = 'none';
+                trail.style.zIndex = '9998';
+                trail.style.fontSize = '1rem';
+                trail.style.animation = 'fadeOut 1s forwards';
+                
+                const style = document.createElement('style');
+                style.textContent = '@keyframes fadeOut { to { opacity: 0; transform: scale(2); } }';
+                if (!document.querySelector('style[data-fadeout]')) {
+                    style.setAttribute('data-fadeout', 'true');
+                    document.head.appendChild(style);
+                }
+                
+                document.body.appendChild(trail);
+                setTimeout(() => trail.remove(), 1000);
+            }
+        });
+
+        // Initialize chaos on load
+        createFloatingEmojis();
+        
+        // Auto chaos every 5 seconds
+        setInterval(() => {
+            if (isChaosActive && Math.random() > 0.5) {
+                const randomEffects = [
+                    () => createDucks(),
+                    () => createSkibidiToilets(),
+                    () => explodeEmojis(),
+                    () => changeColors(),
+                    () => createFireworks(),
+                    () => toiletFlush(),
+                    () => realityGlitch()
+                ];
+                const randomEffect = randomEffects[Math.floor(Math.random() * randomEffects.length)];
+                randomEffect();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
