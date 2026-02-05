@@ -198,6 +198,8 @@
     <script>
         let chaosLevel = 0;
         let isChaosActive = false;
+        let rotationTimer = null;
+        const ROTATION_DURATION = 20000; // 20 seconds
         
         // Create floating emojis on load
         function createFloatingEmojis() {
@@ -232,11 +234,13 @@
                 case 2:
                     button.textContent = '🧻 SKIBIDI MADNESS!! 🧻';
                     document.body.classList.add('shake-mode');
+                    startRotationTimer();
                     toiletFlush();
                     break;
                 case 3:
                     button.textContent = '💦 SKIBIDI MAXIMUM!!! 💦';
                     document.body.classList.add('spinning-mode');
+                    startRotationTimer();
                     explodeEmojis();
                     massiveSkibidiAttack();
                     break;
@@ -262,6 +266,90 @@
             if (Math.random() > 0.7) {
                 playRandomSound();
             }
+        }
+
+        function startRotationTimer() {
+            // Clear the previous timer
+            if (rotationTimer) {
+                clearTimeout(rotationTimer);
+            }
+            
+            // Auto stop rotation after 20 seconds
+            rotationTimer = setTimeout(() => {
+                resetToInitialState();
+            }, ROTATION_DURATION);
+        }
+
+        function resetToInitialState() {
+            // Remove all chaos effect classes
+            document.body.classList.remove('spinning-mode', 'shake-mode');
+            
+            // Reset background
+            document.body.style.background = 'linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06b6d4, #10b981, #fbbf24, #ff006e)';
+            document.body.style.backgroundSize = '400% 400%';
+            document.body.style.filter = '';
+            document.body.style.transform = '';
+            
+            // Reset cursor
+            document.body.style.cursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\'%3E%3Ctext y=\'28\' font-size=\'28\'%3E🍕%3C/text%3E%3C/svg%3E"), auto';
+            
+            // Reset button text
+            const button = document.querySelector('.chaos-button');
+            if (button) {
+                button.textContent = 'UNLEASH CHAOS';
+            }
+            
+            // Clean up dynamic elements
+            const chaosElements = document.querySelectorAll('.skibidi-toilet, .dancing-duck, .toilet-flush, .floating-emoji');
+            chaosElements.forEach(el => el.remove());
+            
+            // Clean up elements in chaosZone
+            const chaosZone = document.getElementById('chaosZone');
+            if (chaosZone) {
+                chaosZone.innerHTML = '';
+            }
+            
+            // Reset chaos level
+            chaosLevel = 0;
+            isChaosActive = false;
+            
+            // Show notification
+            showResetNotification();
+        }
+
+        function showResetNotification() {
+            const notification = document.createElement('div');
+            notification.textContent = '😌 Calm Restored - 20 second rotation ended';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 15px 30px;
+                border-radius: 30px;
+                font-size: 1.2rem;
+                z-index: 10003;
+                animation: fadeInOut 3s forwards;
+            `;
+            
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                    20% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    80% { opacity: 1; transform: translateX(-50%) translateY(0); }
+                    100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+                }
+            `;
+            document.head.appendChild(style);
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+                style.remove();
+            }, 3000);
         }
 
         function createDucks() {
