@@ -186,6 +186,154 @@
             50% { transform: rotate(180deg) scale(1.5); }
             100% { transform: rotate(360deg) scale(1); }
         }
+
+        /* Toilet Vortex Effect */
+        .vortex-center {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, 
+                rgba(0, 150, 255, 0.9) 0%, 
+                rgba(0, 100, 200, 0.8) 20%, 
+                rgba(0, 80, 180, 0.7) 40%, 
+                rgba(0, 60, 160, 0.6) 60%,
+                rgba(0, 40, 140, 0.4) 80%,
+                transparent 100%);
+            z-index: 9997;
+            animation: vortexPulse 0.3s infinite;
+            box-shadow: 
+                0 0 60px rgba(0, 150, 255, 0.8),
+                0 0 120px rgba(0, 100, 200, 0.6),
+                inset 0 0 60px rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+        }
+
+        .vortex-center::before {
+            content: '🚽';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            animation: vortexToiletSpin 0.5s linear infinite;
+            filter: drop-shadow(0 0 20px rgba(0, 200, 255, 1));
+        }
+
+        @keyframes vortexPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1); 
+                box-shadow: 0 0 60px rgba(0, 150, 255, 0.8), 0 0 120px rgba(0, 100, 200, 0.6), inset 0 0 60px rgba(255, 255, 255, 0.3);
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1); 
+                box-shadow: 0 0 80px rgba(0, 150, 255, 1), 0 0 160px rgba(0, 100, 200, 0.8), inset 0 0 80px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        @keyframes vortexToiletSpin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .vortex-sucked {
+            animation: vortexSuck 2s cubic-bezier(0.45, 0, 0.55, 1) forwards !important;
+        }
+
+        @keyframes vortexSuck {
+            0% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+            30% {
+                transform: scale(0.9) rotate(360deg);
+                opacity: 0.9;
+            }
+            60% { 
+                transform: scale(0.5) rotate(720deg); 
+                opacity: 0.6;
+            }
+            100% { 
+                transform: scale(0) rotate(1080deg) translateX(-50%) translateY(-50%); 
+                opacity: 0;
+            }
+        }
+
+        .water-ripple {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 3px solid rgba(0, 150, 255, 0.6);
+            z-index: 9996;
+            pointer-events: none;
+            animation: rippleExpand 2s ease-out forwards;
+        }
+
+        @keyframes rippleExpand {
+            0% {
+                width: 150px;
+                height: 150px;
+                opacity: 1;
+                border-width: 3px;
+            }
+            100% {
+                width: 800px;
+                height: 800px;
+                opacity: 0;
+                border-width: 0px;
+            }
+        }
+
+        .flush-sound-wave {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            z-index: 9995;
+            pointer-events: none;
+            animation: soundWave 1.5s ease-out forwards;
+        }
+
+        @keyframes soundWave {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        .bubble {
+            position: fixed;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(0, 150, 255, 0.4));
+            border-radius: 50%;
+            z-index: 9994;
+            pointer-events: none;
+            animation: bubbleRise 1s ease-out forwards;
+        }
+
+        @keyframes bubbleRise {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-200px) scale(0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -200,6 +348,7 @@
         let isChaosActive = false;
         let rotationTimer = null;
         const ROTATION_DURATION = 20000; // 20 seconds
+        let vortexActive = false;
         
         // Create floating emojis on load
         function createFloatingEmojis() {
@@ -274,9 +423,9 @@
                 clearTimeout(rotationTimer);
             }
             
-            // Auto stop rotation after 20 seconds
+            // After 20 seconds, start the toilet vortex flush effect
             rotationTimer = setTimeout(() => {
-                resetToInitialState();
+                startVortexFlush();
             }, ROTATION_DURATION);
         }
 
@@ -289,6 +438,7 @@
             document.body.style.backgroundSize = '400% 400%';
             document.body.style.filter = '';
             document.body.style.transform = '';
+            document.body.style.transition = '';
             
             // Reset cursor
             document.body.style.cursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\'%3E%3Ctext y=\'28\' font-size=\'28\'%3E🍕%3C/text%3E%3C/svg%3E"), auto';
@@ -299,9 +449,9 @@
                 button.textContent = 'UNLEASH CHAOS';
             }
             
-            // Clean up dynamic elements
-            const chaosElements = document.querySelectorAll('.skibidi-toilet, .dancing-duck, .toilet-flush, .floating-emoji');
-            chaosElements.forEach(el => el.remove());
+            // Clean up all dynamic elements including vortex
+            const allElements = document.querySelectorAll('.skibidi-toilet, .dancing-duck, .toilet-flush, .floating-emoji, .vortex-center, .water-ripple, .bubble, .flush-sound-wave');
+            allElements.forEach(el => el.remove());
             
             // Clean up elements in chaosZone
             const chaosZone = document.getElementById('chaosZone');
@@ -309,9 +459,16 @@
                 chaosZone.innerHTML = '';
             }
             
+            // Remove vortex center if still exists
+            const vortex = document.getElementById('vortexCenter');
+            if (vortex) {
+                vortex.remove();
+            }
+            
             // Reset chaos level
             chaosLevel = 0;
             isChaosActive = false;
+            vortexActive = false;
             
             // Show notification
             showResetNotification();
@@ -319,19 +476,20 @@
 
         function showResetNotification() {
             const notification = document.createElement('div');
-            notification.textContent = '😌 Calm Restored - 20 second rotation ended';
+            notification.textContent = '🚽 Flush Complete - Peace Restored';
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: rgba(0, 0, 0, 0.8);
+                background: rgba(0, 100, 200, 0.9);
                 color: white;
                 padding: 15px 30px;
                 border-radius: 30px;
                 font-size: 1.2rem;
                 z-index: 10003;
                 animation: fadeInOut 3s forwards;
+                box-shadow: 0 0 30px rgba(0, 150, 255, 0.6);
             `;
             
             const style = document.createElement('style');
@@ -350,6 +508,115 @@
                 notification.remove();
                 style.remove();
             }, 3000);
+        }
+
+        function startVortexFlush() {
+            if (vortexActive) return;
+            vortexActive = true;
+            
+            // Create vortex center
+            const vortex = document.createElement('div');
+            vortex.className = 'vortex-center';
+            vortex.id = 'vortexCenter';
+            document.body.appendChild(vortex);
+            
+            // Create water ripples
+            createWaterRipples();
+            
+            // Create bubbles
+            createBubbles();
+            
+            // Show flush sound waves
+            showFlushSoundWaves();
+            
+            // Suck all chaos elements into the vortex
+            suckElementsIntoVortex();
+            
+            // Remove vortex and reset after animation
+            setTimeout(() => {
+                if (vortex) vortex.remove();
+                resetToInitialState();
+                vortexActive = false;
+            }, 3000);
+        }
+
+        function createWaterRipples() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const ripple = document.createElement('div');
+                    ripple.className = 'water-ripple';
+                    document.body.appendChild(ripple);
+                    
+                    setTimeout(() => ripple.remove(), 2000);
+                }, i * 300);
+            }
+        }
+
+        function createBubbles() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    bubble.style.width = (Math.random() * 20 + 10) + 'px';
+                    bubble.style.height = bubble.style.width;
+                    bubble.style.left = (50 + (Math.random() - 0.5) * 30) + '%';
+                    bubble.style.top = (50 + (Math.random() - 0.5) * 30) + '%';
+                    document.body.appendChild(bubble);
+                    
+                    setTimeout(() => bubble.remove(), 1000);
+                }, i * 50);
+            }
+        }
+
+        function showFlushSoundWaves() {
+            const soundEmojis = ['🌊', '💦', '💧', '🚿', ' swirling...'];
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const wave = document.createElement('div');
+                    wave.className = 'flush-sound-wave';
+                    wave.textContent = soundEmojis[i % soundEmojis.length];
+                    document.body.appendChild(wave);
+                    
+                    setTimeout(() => wave.remove(), 1500);
+                }, i * 400);
+            }
+        }
+
+        function suckElementsIntoVortex() {
+            // Get all dynamic chaos elements
+            const chaosElements = document.querySelectorAll('.skibidi-toilet, .dancing-duck, .toilet-flush, .floating-emoji, .chaos-zone > div');
+            
+            chaosElements.forEach((el, index) => {
+                setTimeout(() => {
+                    // Add vortex suction animation
+                    el.classList.add('vortex-sucked');
+                    
+                    // Calculate direction towards center
+                    const rect = el.getBoundingClientRect();
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+                    const deltaX = centerX - (rect.left + rect.width / 2);
+                    const deltaY = centerY - (rect.top + rect.height / 2);
+                    
+                    // Apply inline style for precise movement towards center
+                    el.style.transition = 'all 2s cubic-bezier(0.45, 0, 0.55, 1)';
+                    el.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(0) rotate(1080deg)`;
+                    el.style.opacity = '0';
+                    
+                    // Remove element after animation
+                    setTimeout(() => {
+                        el.remove();
+                    }, 2000);
+                }, index * 50);
+            });
+            
+            // Also suck the entire body content slightly
+            document.body.style.transition = 'transform 2s cubic-bezier(0.45, 0, 0.55, 1)';
+            document.body.style.transform = 'scale(0.98)';
+            
+            setTimeout(() => {
+                document.body.style.transform = '';
+            }, 2000);
         }
 
         function createDucks() {
