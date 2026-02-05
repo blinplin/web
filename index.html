@@ -17,7 +17,7 @@
             animation: gradientShift 3s ease infinite;
             font-family: 'Comic Sans MS', cursive, sans-serif;
             overflow-x: hidden;
-            cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="28" font-size="28">🍕</text></svg>'), auto;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext y='28' font-size='28'%3E🍕%3C/text%3E%3C/svg%3E"), auto;
         }
 
         @keyframes gradientShift {
@@ -42,7 +42,7 @@
             text-shadow: 5px 5px 0px #ff006e, 
                         10px 10px 0px #8338ec,
                         15px 15px 0px #3a86ff;
-            animation: bounce 0.5s infinite alternate, spin 4s linear infinite;
+            animation: titleBounceSpin 0.5s infinite alternate;
             margin-bottom: 2rem;
         }
 
@@ -54,6 +54,11 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        @keyframes titleBounceSpin {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(15deg); }
         }
 
         .chaos-button {
@@ -246,7 +251,7 @@
                     break;
                 default:
                     button.textContent = '🚽 SKIBIDI UNSTOPPABLE 🚽';
-                   skibidi终极Chaos();
+                    skibidiUltimateChaos();
             }
             
             // Random effects
@@ -303,7 +308,8 @@
         function changeCursorRandomly() {
             const cursors = ['🍕', '🦄', '🌮', '🍩', '🎉', '🚀', '🐸', '🦩'];
             const randomCursor = cursors[Math.floor(Math.random() * cursors.length)];
-            document.body.style.cursor = `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"><text y="28" font-size="28">${randomCursor}</text></svg>'), auto`;
+            const encodedCursor = encodeURIComponent(randomCursor);
+            document.body.style.cursor = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext y='28' font-size='28'%3E${encodedCursor}%3C/text%3E%3C/svg%3E"), auto`;
         }
 
         function createFireworks() {
@@ -449,7 +455,7 @@
             }
         }
 
-        function skibidi终极Chaos() {
+        function skibidiUltimateChaos() {
             // Create massive toilet paper rain
             for (let i = 0; i < 150; i++) {
                 setTimeout(() => {
